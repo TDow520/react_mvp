@@ -2,16 +2,16 @@ import React from "react";
 import Cart from "./cart/Cart.jsx"
 
 function Body(props){
-    console.log(props)
+    // console.log(props)
     return (
-        <div className="bg-slate-300 flex justify-center py-[3%] mb-[2%] mx-[15px]">
+        <div className="bg-slate-300 flex lg:py-[3%] mb-[2%] lg:mx-[1%] lg:px-[13%] justify-center">
             <div className="">
-                <h3 className="text-4xl">
+                <h3 className="lg:text-4xl text-center ml-[0px]">
                     These are the Items that you want to buy....
                 </h3>
-                <div className="table">
+                <div className="w-[150%]  ">
                     {/* make the table into a cart component */}
-                    <Cart item={props.cart}/>
+                    <Cart items={props.cart}/>
                 </div>
             </div>
         </div>

@@ -1,58 +1,117 @@
 import React, {useEffect, useState} from "react";
 
-const [item, setItem] = useState();
-const [style, setStyle] = useState();
-const [price, setPrice] = useState();
+function Footer() {
+    const [formItem, setFormItem] = useState("");
+    const [formStyle, setFormStyle] = useState("");
+    const [formPrice, setFormPrice] = useState("");
 
-const UpdateCart = () => {
-    fetch("http://localhost:3000/api/items", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            item: formItem,
-            style: formStyle,
-            price: formPrice
-        }),
-    })
-    .then (response => response.json())
-    .then (data => {
-        console.log(data)
-    })
-    
-}
+    useEffect(() => {
+        fetchCartItems();
+    }, []);
 
-const handleItemChange = (event) => {
-    setItem(event.target.value)
-}
+    const fetchCartItems = () => {
+        fetch("http://localhost:3000/api/items", {
+            method: "GET",
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setCartItems(data);
+            })
+            .catch((error) => console.error(error));
+    };
 
-const handlePriceChange = (event) => {
-    setPrice(event.target.value)
-}
+    const addCartItem = (event) => {
+        event.preventDefault();
 
-const handleStyleChange = (event) => {
-    setStyle(event.target.value)
-}
+        fetch("http://localhost:3000/api/items", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: formItem,
+                style: formStyle,
+                price: formPrice,
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                fetchCartItems();
+            })
+            .catch((error) => console.error(error));
 
-function Footer(){
+        // Clear form inputs after submission
+        setFormItem("");
+        setFormStyle("");
+        setFormPrice("");
+    };
+
+    const handleItemChange = (event) => {
+        setFormItem(event.target.value);
+    };
+
+    const handlePriceChange = (event) => {
+        setFormPrice(event.target.value);
+    };
+
+    const handleStyleChange = (event) => {
+        setFormStyle(event.target.value);
+    };
+
     return (
         <>
             <div className="">
-                <form onSubmit={UpdateCart} className="flex justify-center mx-auto bg-slate-700 w-[40%] rounded-xl">
+                <form
+                    onSubmit={addCartItem}
+                    className="flex justify-center mx-[34%] bg-slate-700 w-[40%] rounded-xl"
+                >
                     <div className="mx-[5%]">
-                        <label for="item name" className="text-slate-100">Item Name:</label>
-                        <input type="text" className="bg-gray-200 w-[95%] mb-[2%] mt-[10px]" value={formItem} onChange={handleItemChange}/>
-                        <label for="style" className="text-slate-100">Style:</label>
-                        <input type="text" className="bg-gray-200 w-[95%] mb-[2%] mt-[10px]" value={formStyle} onChange={handleStyleChange}/>
-                        <label for="price" className="text-slate-100">Price:</label>
-                        <input type="text" className="bg-gray-200 w-[95%] mb-[5%] mt-[10px]" value={formPrice} onChange={handlePriceChange}/>
+                        <label htmlFor="item name" className="text-slate-100">
+                            Item Name:
+                        </label>
+                        <input
+                            type="text"
+                            id="item name"
+                            name="item name"
+                            className="bg-gray-200 w-[95%] mb-[2%] mt-[10px]"
+                            value={formItem}
+                            onChange={handleItemChange}
+                        />
+                        <label htmlFor="style" className="text-slate-100">
+                            Style:
+                        </label>
+                        <input
+                            type="text"
+                            id="style"
+                            name="style"
+                            className="bg-gray-200 w-[95%] mb-[2%] mt-[10px]"
+                            value={formStyle}
+                            onChange={handleStyleChange}
+                        />
+                        <label htmlFor="price" className="text-slate-100">
+                            Price:
+                        </label>
+                        <input
+                            type="text"
+                            id="price"
+                            name="price"
+                            className="bg-gray-200 w-[95%] mb-[5%] mt-[10px]"
+                            value={formPrice}
+                            onChange={handlePriceChange}
+                        />
                     </div>
                 </form>
-                <button type="submit" className="mx-[50%] my-[25px] bg-blue-200 rounded-lg w-[5%]">submit</button>
+                <button
+                    type="submit"
+                    onClick={addCartItem}
+                    className="mx-[45%] my-[25px] bg-blue-200 rounded-lg w-[15%]"
+                >
+                    Submit
+                </button>
             </div>
         </>
-    )
+    );
 }
 
 export default Footer;

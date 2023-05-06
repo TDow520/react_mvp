@@ -43,7 +43,9 @@ app.post("/api/items", async (req, res) => {
     let name = req.body.name;
     let style = req.body.style;
     let price = req.body.price;
+    console.log(req)
     const values = [name, style, price];
+    console.log(values)
     const client = new Client(process.env.DATABASE_URL);
     client.connect();
     const { rows } = await client.query(text, values);
