@@ -11,7 +11,7 @@ function Cart(props){
 
     return(
         <>
-            <table className="lg:text-lg font-semibold w-[100%]">
+            <table className="lg:text-lg font-semibold sm:w-[80%]">
                 {props.items.map(
                     (item) => 
                         <Item item={item} key={item.id} onRemove={handleRemoveItem}/>

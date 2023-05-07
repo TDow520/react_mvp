@@ -38,7 +38,7 @@ function Footer(props) {
             .then((data) => {
                 // console.log(data);
                 props.setCartItems(data);
-                // fetchCartItems();
+                fetchCartItems();
             })
             .catch((error) => console.error(error));
 
@@ -66,7 +66,7 @@ function Footer(props) {
             <div className="">
                 <form
                     onSubmit={addCartItem}
-                    className="flex justify-center mx-[34%] bg-slate-700 w-[40%] rounded-xl"
+                    className="flex justify-center mx-[33%]  sm:mx-[29%] lg:mx-[34%] bg-slate-700 w-[40%] rounded-xl"
                 >
                     <div className="mx-[5%] mt-[2%]">
                         <label htmlFor="item name" className="text-slate-100">
@@ -107,7 +107,7 @@ function Footer(props) {
                 <button
                     type="submit"
                     onClick={addCartItem}
-                    className="mx-[45%] my-[25px] bg-blue-200 rounded-lg w-[15%]"
+                    className="mx-[47%] sm:mx-[41%] lg:mx-[45%] my-[25px] bg-blue-200 rounded-lg w-[15%]"
                 >
                     Submit
                 </button>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import "../../src/App.css";
+import "../../src/CSS/App.css";
+import "../../src/CSS/fonts.css";
 import Head from "./Head.jsx"
 import Body from './Body.jsx';
 import Footer from './Footer';

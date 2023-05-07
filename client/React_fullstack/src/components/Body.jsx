@@ -4,7 +4,7 @@ import Cart from "./cart/Cart.jsx"
 function Body(props){
     // console.log(props)
     return (
-        <div className="bg-slate-300 flex lg:py-[3%] mb-[2%] lg:mx-[1%] lg:px-[13%] justify-center">
+        <div className="bg-slate-300 flex py-[2px] lg:py-[3%] mb-[2%] lg:mx-[1%] lg:px-[13%] lg:justify-center px-[29%]">
             <div className="">
                 <h3 className="lg:text-4xl text-center ml-[0px]">
                     These are the items that you want to buy....
