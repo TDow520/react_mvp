@@ -7,11 +7,11 @@ function Body(props){
         <div className="bg-slate-300 flex lg:py-[3%] mb-[2%] lg:mx-[1%] lg:px-[13%] justify-center">
             <div className="">
                 <h3 className="lg:text-4xl text-center ml-[0px]">
-                    These are the Items that you want to buy....
+                    These are the items that you want to buy....
                 </h3>
                 <div className="w-[150%]  ">
                     {/* make the table into a cart component */}
-                    <Cart items={props.cart}/>
+                    <Cart items={props.cartItems} setItems={props.setCartItems}/>
                 </div>
             </div>
         </div>

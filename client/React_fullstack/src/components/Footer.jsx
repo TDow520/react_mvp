@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 
-function Footer() {
+function Footer(props) {
     const [formItem, setFormItem] = useState("");
     const [formStyle, setFormStyle] = useState("");
     const [formPrice, setFormPrice] = useState("");
@@ -15,7 +15,7 @@ function Footer() {
         })
             .then((response) => response.json())
             .then((data) => {
-                setCartItems(data);
+                props.setCartItems(data);
             })
             .catch((error) => console.error(error));
     };
@@ -36,8 +36,9 @@ function Footer() {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
-                fetchCartItems();
+                // console.log(data);
+                props.setCartItems(data);
+                // fetchCartItems();
             })
             .catch((error) => console.error(error));
 
@@ -45,6 +46,7 @@ function Footer() {
         setFormItem("");
         setFormStyle("");
         setFormPrice("");
+
     };
 
     const handleItemChange = (event) => {
@@ -66,7 +68,7 @@ function Footer() {
                     onSubmit={addCartItem}
                     className="flex justify-center mx-[34%] bg-slate-700 w-[40%] rounded-xl"
                 >
-                    <div className="mx-[5%]">
+                    <div className="mx-[5%] mt-[2%]">
                         <label htmlFor="item name" className="text-slate-100">
                             Item Name:
                         </label>

@@ -1,8 +1,14 @@
 import React from "react";
 
 function Item(props){
-console.log(props)
-
+// console.log(props)
+    const handleClickDelete = () => {
+        console.log(props.item.id)
+        fetch(`http://localhost:3000/api/items/${props.item.id}`, {
+            method: "DELETE",
+        })
+        props.onRemove(props.item.id);
+    }
 
     return(
         <div className="flex justify-center">
@@ -18,7 +24,7 @@ console.log(props)
                     ${props.item.price}
                 </td>
             </tr>
-            <button type="submit" className="bg-teal-100 mx-[7%] h-[35px] w-[60px] m-auto rounded-md shadow-md" onClick>delete</button>
+            <button type="submit" className="bg-teal-100 mx-[7%] h-[35px] w-[60px] m-auto rounded-md shadow-md" onClick={handleClickDelete}>delete</button>
         </div>
     )
 }

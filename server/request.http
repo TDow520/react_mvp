@@ -5,7 +5,7 @@ GET http://localhost:3000/
 GET http://localhost:3000/api/items
 
 ###
-GET http://localhost:3000/api/items/1
+GET http://localhost:3000/api/items/smart%20watch
 
 ###
 POST http://localhost:3000/api/items

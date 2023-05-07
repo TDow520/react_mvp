@@ -12,13 +12,13 @@ const { Client } = pg;
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 
 app.get("/", (req, res) => {
     res.send("Hello World!");
 });
 
-app.get("/api/items", async (req, res, next) => {
+app.get("/api/items", async (req, res) => {
     const client = new Client(process.env.DATABASE_URL);
     client.connect();
     const { rows } = await client.query("SELECT * FROM items");
@@ -27,11 +27,23 @@ app.get("/api/items", async (req, res, next) => {
     client.end();
 });
 
-app.get("/api/items/:id", async (req, res) => {
-    let id = req.params.id;
+app.get("/api/items/:name", async (req, res, next) => {
+    let name = req.params.name;
+    if(!name){
+        next({
+            status: 404,
+            message: "Item not found"
+        })
+    }
     const client = new Client(process.env.DATABASE_URL);
     client.connect();
-    const { rows } = await client.query("SELECT * FROM items WHERE id = $1", [id]);
+    const { rows } = await client.query("SELECT * FROM items WHERE name = $1", [name]);
+    if (rows.length == 0) {
+        next({
+            status: 404,
+            message: 'Item Not Found',
+        });
+    }
     console.log(rows);
     res.send(rows);
     client.end();
@@ -46,12 +58,20 @@ app.post("/api/items", async (req, res) => {
     console.log(req)
     const values = [name, style, price];
     console.log(values)
-    const client = new Client(process.env.DATABASE_URL);
-    client.connect();
-    const { rows } = await client.query(text, values);
-    console.log(rows);
-    res.send(rows);
-    client.end();
+    try {
+        const client = new Client(process.env.DATABASE_URL);
+        client.connect();
+        const { rows } = await client.query(text, values);
+        console.log(rows);
+        res.send(rows);
+        client.end();
+        
+    } catch (error) {
+        console.log(error)
+        res.status(400).json([{
+            message:error
+        }])
+    }
 });
 
 app.delete("/api/items/:id", async (req, res) => {
@@ -62,6 +82,18 @@ app.delete("/api/items/:id", async (req, res) => {
     console.log(rows);
     res.send(rows);
     client.end();
+});
+
+app.use((req, res, next) => {
+    next({
+        status: 404,
+        message: 'Not Found'
+    });
+});
+
+app.use((err, req, res, next) => {
+    // console.log(err);
+    res.status(err.status).send(err.message);
 });
 
 app.listen(PORT, () => {
