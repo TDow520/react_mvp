@@ -4,6 +4,7 @@ import "../../src/CSS/fonts.css";
 import Head from "./Head.jsx"
 import Body from './Body.jsx';
 import Footer from './Footer';
+import Nav from './Signin';
 
 function App() {
 const [cart, setCart] = useState([])
@@ -16,6 +17,7 @@ useEffect(() => {
 
   return (
     <>
+      <Nav/>
       <Head/>
       <Body cartItems={cart} setCartItems={setCart}/>
       <Footer setCartItems={setCart} cartItems={cart}/>
